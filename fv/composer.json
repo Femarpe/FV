@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Fv\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Fv\\Tests\\": "tests/"
         }
     },
     "replace": {

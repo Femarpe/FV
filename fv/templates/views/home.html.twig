@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {% set saludo = "hola !" %}
+
+    <a>Esto es un enlace</a>
+
+    <h1> Esto es una cabecera </h1>
+
+    <p> {{saludo | capitalize}} </p>
+
+    <p> {{'2024/12/24' | date('d-m-Y') }} </p>
+
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <h1> Esto es el footer secundario </h1>
+    </footer>
+{% endblock %}
