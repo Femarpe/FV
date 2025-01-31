@@ -9,3 +9,30 @@ home:
     path: /
     controller: Fv\Controller\GetHomeController
     methods: GET
+
+landing:
+    path: /landing_prueba
+    controller: Fv\Controller\LandingController::index 
+    methods: GET
+
+crear_personaje_prueba:
+    path: /crear_personaje_prueba
+    controller: Fv\Controller\GetAddPersonajeController
+    methods: GET
+
+personaje_prueba:
+    path: /personaje_prueba
+    controller: Fv\Controller\GetPersonajeController
+    methods: GET
+
+campanyas:
+    path: /campañas
+    controller: Fv\Controller\CampañasController::index
+
+eventos:
+    path: /eventos
+    controller: Fv\Controller\EventosController::index
+
+perfil:
+    path: /perfil
+    controller: Fv\Controller\PerfilController::index

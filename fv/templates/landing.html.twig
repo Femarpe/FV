@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FantasyVerse - Explora Mundos de Rol{% endblock %}
+
+{% block body %}
+    <div class="welcome-box text-center text-white">
+        <h1>Bienvenido a FantasyVerse</h1>
+        <p>Explora mundos épicos y juega campañas inolvidables.</p>
+    </div>
+
+    <section class="container mt-4">
+        <h2 class="text-center mb-4">Campañas Destacadas</h2>
+        <div class="row">
+            {% for campaign in campaigns %}
+                <div class="col-md-4">
+                    <div class="card campaign-card">
+                        <img src="{{ campaign.image }}" class="card-img-top" alt="Imagen de campaña">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ campaign.title }}</h5>
+                            <p class="card-text">{{ campaign.description }}</p>
+                            <a href="#" class="btn btn-primary">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <style>
+        /* Estilo de bienvenida */
+        .welcome-box {
+            background: linear-gradient(to right, #1D3557, #457B9D);
+            padding: 50px;
+            border-radius: 15px;
+        }
+
+        /* Tarjetas de campañas */
+        .campaign-card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .campaign-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+{% endblock %}

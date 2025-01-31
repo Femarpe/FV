@@ -42,7 +42,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=pas_db
+      - MYSQL_DATABASE=fv_db
     ports:
       - 3306:3306
     networks:
