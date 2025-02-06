@@ -30,10 +30,8 @@ services:
       - mysql
     networks:
       - fv-network
-    deploy:
-      resources:
-        limits:
-          memory: 1024M
+    
+      
 
   mysql:
     container_name: mysql_server
@@ -52,7 +50,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1024M
+          memory: 2048M
 
 networks:
   fv-network:

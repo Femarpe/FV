@@ -20,6 +20,28 @@ crear_personaje_prueba:
     controller: Fv\Controller\GetAddPersonajeController
     methods: GET
 
+
+personaje:
+    path: /personaje/{id}
+    controller: Fv\Controller\PersonajeController
+    methods: GET
+
+
+ver_personaje_prueba:
+    path: /personaje/prueba
+    controller: Fv\Controller\PersonajeController::verPersonajePrueba
+
+editar_personaje:
+    path: /personaje/editar/{id}
+    controller: Fv\Controller\PersonajeController::editarPersonaje
+
+guardar_personaje:
+    path: /personaje/guardar/{id}
+    controller: Fv\Controller\PersonajeController::guardarPersonaje
+    methods: [POST]
+
+
+
 personaje_prueba:
     path: /personaje_prueba
     controller: Fv\Controller\GetPersonajeController
