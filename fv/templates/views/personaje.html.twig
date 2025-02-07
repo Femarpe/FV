@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container mt-4">
-    <h1 class="text-center">✍️ Editar Ficha de Personaje</h1>
+    <h1 class="text-center" >{{ personaje.nombre }}</h1>
 
     <form method="post"
         action="{{ path('guardar_personaje', {'id': personaje.id}) }}">
