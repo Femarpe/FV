@@ -86,19 +86,22 @@
         <img src="/images/logo_FV.png" alt="FantasyVerse Logo">
         <ul class="nav flex-column w-100">
             <li class="nav-item">
-                <a class="nav-link {% if app.request.get('_route') == 'home' %}active{% endif %}" href="{{ path('home') }}">🏠 Inicio</a>
+                <a class="nav-link {% if app.request.get('_route') == 'landing' %}active{% endif %}" href="{{ path('landing') }}">🏠 Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if app.request.get('_route') == 'campanyas' %}active{% endif %}" href="{{ path('campanyas') }}">🎲 Campañas</a>
+                <a  class="nav-link {% if app.request.get('_route') == 'ver_personaje_prueba' %}active{% endif %}" href="{{ path('ver_personaje_prueba') }}">🐉 Personaje ejemplo</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if app.request.get('_route') == 'eventos' %}active{% endif %}" href="{{ path('eventos') }}">📅 Eventos</a>
+                <a  class="nav-link {% if app.request.get('_route') == 'campanyas' %}active{% endif %}" href="#">🎲 Campañas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if app.request.get('_route') == 'perfil' %}active{% endif %}" href="{{ path('perfil') }}">👤 Mi Perfil</a>
+                <a  class="nav-link {% if app.request.get('_route') == 'eventos' %}active{% endif %}" href="#">📅 Eventos</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-success w-100" href="#">Únete</a>
+                <a  class="nav-link {% if app.request.get('_route') == 'perfil' %}active{% endif %}" href="#">👤 Mi Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-success w-100" href="#">Inicia sesion</a>
             </li>
         </ul>
     </nav>

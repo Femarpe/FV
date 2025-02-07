@@ -12,9 +12,9 @@ class PersonajeController extends AbstractController
         $personaje = [
             'id' => 0,
             'nombre' => 'Euris Eisenberg',
-            'jugador' => 'Nombre del Jugador', 
+            'jugador' => 'Nombre del Jugador',
             'trasfondo' => 'Ex-Oficial de la Guardia de Neverwinter',
-            'experiencia' => 4500, 
+            'experiencia' => 4500,
             'raza' => 'Semielfo',
             'clase' => 'Guerrera',
             'nivel' => 5,
@@ -29,23 +29,57 @@ class PersonajeController extends AbstractController
             'carisma' => 10,
             'bonificacion_competencia' => 3,
 
+            // Tiradas de salvacion
+            'tiradas_salvacion' => [
+                'fuerza' => 6,
+                'destreza' => 2,
+                'constitucion' => 5,
+                'inteligencia' => -1,
+                'sabiduria' => 2,
+                'carisma' => -1
+            ],
+
+            // Habilidades
+            'habilidades' => [
+                'acrobatics' => ['atributo' => 'Destreza', 'valor' => 2, 'competencia' => false],
+                'arcana' => ['atributo' => 'Inteligencia', 'valor' => 0, 'competencia' => false],
+                'athletics' => ['atributo' => 'Fuerza', 'valor' => 6, 'competencia' => true],
+                'deception' => ['atributo' => 'Carisma', 'valor' => 0, 'competencia' => false],
+                'history' => ['atributo' => 'Inteligencia', 'valor' => 0, 'competencia' => false],
+                'insight' => ['atributo' => 'Sabiduría', 'valor' => 2, 'competencia' => false],
+                'intimidation' => ['atributo' => 'Carisma', 'valor' => 0, 'competencia' => false],
+                'investigation' => ['atributo' => 'Inteligencia', 'valor' => 0, 'competencia' => false],
+                'medicine' => ['atributo' => 'Sabiduría', 'valor' => 2, 'competencia' => false],
+                'nature' => ['atributo' => 'Inteligencia', 'valor' => 0, 'competencia' => false],
+                'perception' => ['atributo' => 'Sabiduría', 'valor' => 2, 'competencia' => true],
+                'performance' => ['atributo' => 'Carisma', 'valor' => 0, 'competencia' => false],
+                'persuasion' => ['atributo' => 'Carisma', 'valor' => 0, 'competencia' => false],
+                'religion' => ['atributo' => 'Inteligencia', 'valor' => 0, 'competencia' => false],
+                'sleight_of_hand' => ['atributo' => 'Destreza', 'valor' => 2, 'competencia' => false],
+                'stealth' => ['atributo' => 'Destreza', 'valor' => 2, 'competencia' => false],
+                'survival' => ['atributo' => 'Sabiduría', 'valor' => 2, 'competencia' => false]
+            ],
+
             // Combate
-            'ca' => 18, 
+            'ca' => 18,
             'puntos_golpe' => 47,
+            'puntos_golpe_temporales' => 25,
+            'iniciativa' => 2,
+            'tirada_iniciativa' => 20,
             'dados_golpe' => '5d10',
 
             // Magia
             'magia' => true,
             'cd_conjuro' => 13,
-            'ataque_conjuro' => '+5',
+            'ataque_conjuro' => 5,
 
             // Inventario y equipo
-            'carga_maxima' => 180, 
+            'carga_maxima' => 180,
             'monedas' => '50 PO, 20 PP, 10 PC',
             'armas' => [
-                ['nombre' => 'Alabarda', 'descripcion' => 'Un arma de asta con gran alcance'],
-                ['nombre' => 'Espada mágica "Garra"', 'descripcion' => 'Espada corta con filo encantado'],
-                ['nombre' => 'Ballesta Ligera', 'descripcion' => 'Arma de proyectiles con 20 virotes'],
+                ['nombre' => 'Alabarda', 'danio' => '1d10', 'tipo_danio' => 'Cortante'],
+                ['nombre' => 'Espada "Garra"', 'danio' => '1d6+1', 'tipo_danio' => 'Cortante'],
+                ['nombre' => 'Ballesta Ligera', 'danio' => '1d8', 'tipo_danio' => 'Perforante']
             ],
             'equipo' => [
                 'Cota de malla',
