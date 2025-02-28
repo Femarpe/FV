@@ -19,8 +19,19 @@ class PersonajeController extends AbstractController
             'clase' => 'Guerrera',
             'nivel' => 5,
             'alineamiento' => 'Legal Neutral',
+            'idiomas' => ['Común', 'Élfico'],
+            'inspiracion' => 0,
+            'velocidad' => 30, // En pies
+            'resistencias' => ['Veneno', 'Fuego'],
+            'vulnerabilidades' => ['Frío'],
+            'inmunidades' => ['Encantamiento'],
+            'dado_golpe_tipo' => 'd10', // Depende de la clase
+            'xp_proximo_nivel' => 6500,
+            'estado_actual' => 'Normal', // Puede ser 'Herido', 'Inconsciente', etc.
+            'competencias_herramientas' => ['Kit de Herramientas de Herrero', 'Instrumento Musical (Laúd)'],
+            'notas' => 'Se siente responsable por la muerte de su escuadrón.',
 
-            // Atributos
+            // Atributos    
             'fuerza' => 18,
             'destreza' => 12,
             'constitucion' => 16,
@@ -72,6 +83,10 @@ class PersonajeController extends AbstractController
             'magia' => true,
             'cd_conjuro' => 13,
             'ataque_conjuro' => 5,
+            'conjuros' => [
+                ['nombre' => 'Luz', 'nivel' => 0, 'componentes' => 'V, M'],
+                ['nombre' => 'Misil Mágico', 'nivel' => 1, 'componentes' => 'V, S'],
+            ],
 
             // Inventario y equipo
             'carga_maxima' => 180,

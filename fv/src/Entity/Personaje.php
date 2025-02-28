@@ -18,36 +18,118 @@ class Personaje
 
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
-    
+
     #[ORM\Column(length: 255)]
-    private ?string $ca = null;
+    private ?string $jugador = null;
 
-    public function getId(): ?Uuid
-    {
-        return $this->id;
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $trasfondo = null;
 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
+    #[ORM\Column(type: 'integer')]
+    private int $experiencia;
 
-    public function setNombre(string $nombre): static
-    {
-        $this->nombre = $nombre;
+    #[ORM\Column(length: 255)]
+    private ?string $raza = null;
 
-        return $this;
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $clase = null;
 
-    public function getCa(): ?string
-    {
-        return $this->ca;
-    }
+    #[ORM\Column(type: 'integer')]
+    private int $nivel;
 
-    public function setCa(string $ca): static
-    {
-        $this->ca = $ca;
+    #[ORM\Column(length: 255)]
+    private ?string $alineamiento = null;
 
-        return $this;
-    }
+    #[ORM\Column(type: 'json')]
+    private array $idiomas = [];
+
+    #[ORM\Column(type: 'integer')]
+    private int $inspiracion;
+
+    #[ORM\Column(type: 'integer')]
+    private int $velocidad;
+
+    #[ORM\Column(type: 'json')]
+    private array $resistencias = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $vulnerabilidades = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $inmunidades = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $dado_golpe_tipo = null;
+
+    #[ORM\Column(type: 'integer')]
+    private int $xp_proximo_nivel;
+
+    #[ORM\Column(length: 255)]
+    private ?string $estado_actual = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $competencias_herramientas = [];
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $notas = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $atributos = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $tiradas_salvacion = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $habilidades = [];
+
+    #[ORM\Column(type: 'integer')]
+    private int $ca;
+
+    #[ORM\Column(type: 'integer')]
+    private int $puntos_golpe;
+
+    #[ORM\Column(type: 'integer')]
+    private int $puntos_golpe_temporales;
+
+    #[ORM\Column(type: 'integer')]
+    private int $iniciativa;
+
+    #[ORM\Column(length: 255)]
+    private ?string $dados_golpe = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $magia;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $cd_conjuro = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $ataque_conjuro = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $conjuros = [];
+
+    #[ORM\Column(type: 'integer')]
+    private int $carga_maxima;
+
+    #[ORM\Column(length: 255)]
+    private ?string $monedas = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $armas = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $equipo = [];
+
+    #[ORM\Column(type: 'text')]
+    private ?string $rasgos_personalidad = null;
+
+    #[ORM\Column(type: 'text')]
+    private ?string $ideales = null;
+
+    #[ORM\Column(type: 'text')]
+    private ?string $vinculos = null;
+
+    #[ORM\Column(type: 'text')]
+    private ?string $defectos = null;
 }

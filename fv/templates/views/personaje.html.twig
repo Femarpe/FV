@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container mt-4">
-    <h1 class="text-center" >{{ personaje.nombre }}</h1>
+    <h1 class="text-center">{{ personaje.nombre }}</h1>
 
     <form method="post"
         action="{{ path('guardar_personaje', {'id': personaje.id}) }}">
@@ -14,6 +14,10 @@
                     href="#basico">📝 Datos Básicos</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                     href="#atributos">⚔️ Atributos</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                    href="#salvaciones">🎲 Tiradas de Salvación</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                    href="#habilidades">🛠️ Habilidades</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                     href="#combate">🛡️ Combate</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
@@ -28,120 +32,104 @@
             <!-- 📝 Datos Básicos -->
             <div id="basico" class="tab-pane fade show active">
                 <h3>📝 Datos Básicos</h3>
-                <div class="mb-3"><label class="form-label">Nombre</label>
-                    <input type="text" class="form-control" name="nombre"
-                        value="{{ personaje.nombre }}">
-                </div>
-                <div class="mb-3"><label class="form-label">Jugador</label>
-                    <input type="text" class="form-control" name="jugador"
-                        value="{{ personaje.jugador }}">
-                </div>
-                <div class="mb-3"><label class="form-label">Trasfondo</label>
-                    <input type="text" class="form-control" name="trasfondo"
-                        value="{{ personaje.trasfondo }}">
-                </div>
-                <div class="mb-3"><label class="form-label">Experiencia</label>
-                    <input type="number" class="form-control" name="experiencia"
-                        value="{{ personaje.experiencia }}">
+                <div class="row">
+                    {% for campo, valor in {
+                    'jugador': personaje.jugador,
+                    'trasfondo': personaje.trasfondo,
+                    'experiencia': personaje.experiencia,
+                    'estado_actual': personaje.estado_actual,
+                    'velocidad': personaje.velocidad,
+                    'alineamiento': personaje.alineamiento,
+                    'idiomas': personaje.idiomas|join(', ')
+                    } %}
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">{{ campo|capitalize }}</label>
+                        <input type="text" class="form-control"
+                            name="{{ campo }}" value="{{ valor }}">
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
-            <!-- 🛠️ Atributos -->
+            <!-- ⚔️ Atributos -->
             <div id="atributos" class="tab-pane fade">
                 <h3>⚔️ Atributos</h3>
-                {% for atributo, valor in {'fuerza': personaje.fuerza,
-                'destreza': personaje.destreza, 'constitucion':
-                personaje.constitucion, 'inteligencia': personaje.inteligencia,
-                'sabiduria': personaje.sabiduria, 'carisma': personaje.carisma}
-                %}
-                <div class="mb-3"><label class="form-label">{{
-                        atributo|capitalize }}</label>
-                    <input type="number" class="form-control"
-                        name="{{ atributo }}" value="{{ valor }}" min="1"
-                        max="20">
+                <div class="row">
+                    {% for atributo, valor in personaje %}
+                    {% if atributo in ['fuerza', 'destreza', 'constitucion',
+                    'inteligencia', 'sabiduria', 'carisma'] %}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">{{ atributo|capitalize
+                            }}</label>
+                        <input type="number" class="form-control"
+                            name="{{ atributo }}" value="{{ valor }}">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <div class="mb-3"><label class="form-label">Bonificación por
-                        Competencia</label>
-                    <input type="number" class="form-control"
-                        name="bonificacion_competencia"
-                        value="{{ personaje.bonificacion_competencia }}">
-                </div>
-                
-                <h3>🎲 Tiradas de Salvación</h3>
-                {% for atributo, valor in {'fuerza': personaje.fuerza,
-                'destreza': personaje.destreza, 'constitucion':
-                personaje.constitucion, 'inteligencia': personaje.inteligencia,
-                'sabiduria': personaje.sabiduria, 'carisma': personaje.carisma}
-                %}
-                <div class="mb-3">
-                    <label class="form-label">{{ atributo|capitalize }}</label>
-                    <input type="number" class="form-control"
-                        name="tiradas_salvacion[{{ atributo }}]"
-                        value="{{ personaje.tiradas_salvacion[atributo] }}">
-                </div>
-                {% endfor %}
-
-                <h3>🛠️ Habilidades</h3>
-                {% for habilidad, datos in personaje.habilidades %}
-                <div class="mb-3">
-                    <label class="form-label">
-                        <input type="checkbox"
-                            name="habilidades[{{ habilidad }}][competencia]" {%
-                            if datos.competencia %}checked{% endif %}>
-                        {{ habilidad|capitalize }} ({{ datos.atributo }})
-                    </label>
-                    <input type="number" class="form-control"
-                        name="habilidades[{{ habilidad }}][valor]"
-                        value="{{ datos.valor }}">
-                </div>
-                {% endfor %}
-
-                
-
             </div>
 
-            {% macro format_bonus(value) %}
-                {{ value >= 0 ? '+' ~ value : value }}
-            {% endmacro %}
+            <!-- 🎲 Tiradas de Salvación -->
+            <div id="salvaciones" class="tab-pane fade">
+                <h3>🎲 Tiradas de Salvación</h3>
+                <div class="row">
+                    {% for atributo, valor in personaje.tiradas_salvacion %}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">{{ atributo|capitalize
+                            }}</label>
+                        <input type="number" class="form-control"
+                            name="tiradas_salvacion[{{ atributo }}]"
+                            value="{{ valor }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-            {% import _self as utils %}
+            <!-- 🛠️ Habilidades -->
+            <div id="habilidades" class="tab-pane fade">
+                <h3>🛠️ Habilidades</h3>
+                <div class="row">
+                    {% for habilidad, datos in personaje.habilidades %}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">
+                            <input type="checkbox"
+                                name="habilidades[{{ habilidad }}][competencia]"
+                                {% if datos.competencia %}checked{% endif %}>
+                            {{ habilidad|capitalize }} ({{ datos.atributo }})
+                        </label>
+                        <input type="number" class="form-control"
+                            name="habilidades[{{ habilidad }}][valor]"
+                            value="{{ datos.valor }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 
-            
-
-            
+        <div class="tab-content mt-3">
             <!-- 🛡️ Combate -->
-
             <div id="combate" class="tab-pane fade">
                 <h3>🛡️ Combate</h3>
-                <div class="mb-3"><label class="form-label">Clase de
-                        Armadura</label>
-                    <input type="number" class="form-control" name="ca"
-                        value="{{ personaje.ca }}">
+                <div class="row">
+                    {% for campo, valor in {
+                    'ca': personaje.ca,
+                    'puntos_golpe': personaje.puntos_golpe,
+                    'puntos_golpe_temporales':
+                    personaje.puntos_golpe_temporales,
+                    'iniciativa': personaje.iniciativa,
+                    'tirada_iniciativa': personaje.tirada_iniciativa,
+                    'dados_golpe': personaje.dados_golpe,
+                    'resistencias': personaje.resistencias|join(', '),
+                    'vulnerabilidades': personaje.vulnerabilidades|join(', '),
+                    'inmunidades': personaje.inmunidades|join(', ')
+                    } %}
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">{{ campo|capitalize }}</label>
+                        <input type="text" class="form-control"
+                            name="{{ campo }}" value="{{ valor }}">
+                    </div>
+                    {% endfor %}
                 </div>
-                <div class="mb-3"><label class="form-label">Puntos de Golpe
-                        Máximos</label>
-                    <input type="number" class="form-control"
-                        name="puntos_golpe"
-                        value="{{ personaje.puntos_golpe }}">
-                </div>
-                <div class="mb-3"><label class="form-label">Puntos de Golpe
-                        Temporales</label>
-                    <input type="number" class="form-control"
-                        name="puntos_golpe_temporales"
-                        value="{{ personaje.puntos_golpe_temporales }}">
-                </div>
-                <div class="mb-3"><label class="form-label">Iniciativa</label>
-                    <input type="number" class="form-control" name="iniciativa"
-                        value="{{ personaje.iniciativa }}">
-                </div>
-                <div class="mb-3"><label class="form-label"> Tirada de
-                        Iniciativa 🎲</label>
-                    <input type="number" class="form-control"
-                        name="tirada_iniciativa"
-                        value="{{ personaje.tirada_iniciativa }}">
-                </div>
-
                 <h4>🗡️ Armas</h4>
                 {% for arma in personaje.armas %}
                 <div class="mb-3"><label class="form-label">Nombre del
@@ -163,6 +151,24 @@
                 <hr>
                 {% endfor %}
             </div>
+        </div>
+
+        <div class="tab-content mt-3">
+            <!-- 🎒 Inventario -->
+            <div id="inventario" class="tab-pane fade">
+                <h3>🎒 Inventario</h3>
+                <div class="mb-3"><label class="form-label">Monedas</label>
+                    <input type="text" class="form-control" name="monedas"
+                        value="{{ personaje.monedas }}">
+                </div>
+                <h4>📦 Equipamiento</h4>
+                {% for item in personaje.equipo %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="equipo[]"
+                        value="{{ item }}">
+                </div>
+                {% endfor %}
+            </div>
 
             <!-- ✨ Magia -->
             <div id="hechizos" class="tab-pane fade">
@@ -179,43 +185,47 @@
                         name="ataque_conjuro"
                         value="{{ personaje.ataque_conjuro }}">
                 </div>
-                {% endif %}
-            </div>
-
-            <!-- 🎒 Inventario -->
-            <div id="inventario" class="tab-pane fade">
-                <h3>🎒 Inventario</h3>
-                <div class="mb-3"><label class="form-label">Carga Máxima</label>
+                <h4>📜 Conjuros</h4>
+                {% for conjuro in personaje.conjuros %}
+                <div class="mb-3">
+                    <label class="form-label">Nombre del Conjuro</label>
+                    <input type="text" class="form-control"
+                        name="conjuros[{{ loop.index0 }}][nombre]"
+                        value="{{ conjuro.nombre }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nivel</label>
                     <input type="number" class="form-control"
-                        name="carga_maxima"
-                        value="{{ personaje.carga_maxima }}">
+                        name="conjuros[{{ loop.index0 }}][nivel]"
+                        value="{{ conjuro.nivel }}">
                 </div>
-                <div class="mb-3"><label class="form-label">Monedas</label>
-                    <input type="text" class="form-control" name="monedas"
-                        value="{{ personaje.monedas }}">
+                <div class="mb-3">
+                    <label class="form-label">Componentes</label>
+                    <input type="text" class="form-control"
+                        name="conjuros[{{ loop.index0 }}][componentes]"
+                        value="{{ conjuro.componentes }}">
                 </div>
+                <hr>
+                {% endfor %}
+                {% endif %}
             </div>
 
             <!-- 🎭 Personalidad -->
             <div id="personalidad" class="tab-pane fade">
                 <h3>🎭 Personalidad</h3>
-                <div class="mb-3"><label class="form-label">Rasgos de
-                        Personalidad</label>
-                    <textarea class="form-control" name="rasgos_personalidad"
-                        rows="3">{{ personaje.rasgos_personalidad }}</textarea>
+                {% for campo, valor in {
+                'rasgos_personalidad': personaje.rasgos_personalidad,
+                'ideales': personaje.ideales,
+                'vinculos': personaje.vinculos,
+                'defectos': personaje.defectos,
+                'notas': personaje.notas
+                } %}
+                <div class="mb-3">
+                    <label class="form-label">{{ campo|capitalize }}</label>
+                    <textarea class="form-control" name="{{ campo }}"
+                        rows="3">{{ valor }}</textarea>
                 </div>
-                <div class="mb-3"><label class="form-label">Ideales</label>
-                    <textarea class="form-control" name="ideales"
-                        rows="2">{{ personaje.ideales }}</textarea>
-                </div>
-                <div class="mb-3"><label class="form-label">Vínculos</label>
-                    <textarea class="form-control" name="vinculos"
-                        rows="2">{{ personaje.vinculos }}</textarea>
-                </div>
-                <div class="mb-3"><label class="form-label">Defectos</label>
-                    <textarea class="form-control" name="defectos"
-                        rows="2">{{ personaje.defectos }}</textarea>
-                </div>
+                {% endfor %}
             </div>
         </div>
 

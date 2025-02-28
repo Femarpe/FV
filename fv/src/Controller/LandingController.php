@@ -25,6 +25,7 @@ class LandingController extends AbstractController
                 'description' => 'Forja alianzas y defiende Hyrule en su momoento mas bajo.', 
                 'image' => '/images/hyrule.jpg'
             ],
+             
         ];
 
         return $this->render('landing.html.twig', ['campaigns' => $campaigns]);
