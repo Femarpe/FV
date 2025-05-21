@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Fv\Repository\PersonajeRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: PersonajeRepository::class)]
 class Personaje
@@ -31,11 +33,11 @@ class Personaje
     #[ORM\Column(length: 255)]
     private ?string $raza = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $clase = null;
+    #[ORM\Column(type: 'json')]
+    private array $clases_niveles = []; // Almacena las clases y niveles del personaje
 
-    #[ORM\Column(type: 'integer')]
-    private int $nivel;
+    #[ORM\Column(type: 'json')]
+    private array $clases_lanzadoras_conjuros = []; // Almacena las clases lanzadoras de conjuros del personaje
 
     #[ORM\Column(length: 255)]
     private ?string $alineamiento = null;
@@ -106,8 +108,12 @@ class Personaje
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $ataque_conjuro = null;
 
+    #[ORM\ManyToMany(targetEntity: Conjuro::class)]
+    #[ORM\JoinTable(name: "personaje_conjuros")]
+    private Collection $conjuros;
+
     #[ORM\Column(type: 'json')]
-    private array $conjuros = [];
+    private array $conjuros_extra = []; // Conjuros obtenidos por dotes, armas o herramientas mágicas
 
     #[ORM\Column(type: 'integer')]
     private int $carga_maxima;
@@ -132,4 +138,9 @@ class Personaje
 
     #[ORM\Column(type: 'text')]
     private ?string $defectos = null;
+
+    public function __construct()
+    {
+        $this->conjuros = new ArrayCollection();
+    }
 }
