@@ -35,7 +35,11 @@ personaje:
 
 ver_personaje_prueba:
     path: /personaje/prueba
-    controller: Fv\Controller\PersonajeController::verPersonajePrueba
+    controller: Fv\Controller\PersonajePruebaController
+
+ver_personajes:
+    path: /personajes
+    controller: Fv\Controller\PersonajeController
 
 editar_personaje:
     path: /personaje/editar/{id}
@@ -77,7 +81,7 @@ ruta_admin:
 
 ruta_usuario:
     path: /usuario
-    controller: Fv\Controller\UsuarioController::index
+    controller: Fv\Controller\UsuarioController
 
 ruta_invitado:
     path: /invitado

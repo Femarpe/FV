@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis personajes{% endblock %}
+
+{% block body %}
+    <h1>Mis personajes</h1>
+
+    <a href="#">+ Crear nuevo personaje</a>
+
+    <ul>
+        {% for p in personajes %}
+            <li>{{ p.nombre }} (CA: {{ p.ca }})</li>
+        {% else %}
+            <li>No tienes personajes aún.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

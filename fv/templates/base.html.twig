@@ -106,6 +106,9 @@
                 <a  class="nav-link {% if app.request.get('_route') == 'ver_personaje_prueba' %}active{% endif %}" href="{{ path('ver_personaje_prueba') }}">🐉 Personaje ejemplo</a>
             </li>
             <li class="nav-item">
+                <a  class="nav-link {% if app.request.get('_route') == 'ver_personajes' %}active{% endif %}" href="{{ path('ver_personajes') }}">🗡️ Personajes</a>
+            </li>
+            <li class="nav-item">
                 <a  class="nav-link {% if app.request.get('_route') == 'campanyas' %}active{% endif %}" href="#">🎲 Campañas</a>
             </li>
             <li class="nav-item">
@@ -115,7 +118,7 @@
                 <a  class="nav-link {% if app.request.get('_route') == 'perfil' %}active{% endif %}" href="#">👤 Mi Perfil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link log-boton"  href="#">Iniciar sesion</a>
+                <a class="nav-link log-boton"  href="/login">Iniciar sesion</a>
             </li>
             <li class="nav-item">
                 <form method="post" action="/logout">

@@ -18,3 +18,6 @@ class GetLoginFormController extends AbstractController
         ]);
     }
 }
+//euris.fm@gmail.com admin admin
+//usuario@fv.local 1234 usuario
+//invitado@fv.local 1234 invitado
