@@ -1,0 +1,37 @@
+security:
+    password_hashers:
+        Fv\Entity\Usuario:
+            algorithm: auto
+
+    providers:
+        usuarios:
+            entity:
+                class: Fv\Entity\Usuario
+                property: correo
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true
+            provider: usuarios
+            form_login:
+                login_path: login
+                check_path: login
+                success_handler: Fv\Security\RedireccionPorRol
+                enable_csrf: true
+            logout:
+                path: logout
+                target: /login
+
+                
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/usuario, roles: ROLE_USER }
+        - { path: ^/invitado, roles: ROLE_INVITADO }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+
+

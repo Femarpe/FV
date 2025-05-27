@@ -1,3 +1,9 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+
+
+
 prueba:
     path: /prueba
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
@@ -58,3 +64,24 @@ eventos:
 perfil:
     path: /perfil
     controller: Fv\Controller\PerfilController::index
+
+
+usuario_index:
+    path: /usuarios
+    controller: Fv\Controller\UsuarioController::index
+
+
+ruta_admin:
+    path: /admin
+    controller: Fv\Controller\AdminController::index
+
+ruta_usuario:
+    path: /usuario
+    controller: Fv\Controller\UsuarioController::index
+
+ruta_invitado:
+    path: /invitado
+    controller: Fv\Controller\InvitadoController::index
+
+logout:
+    path: /logout

@@ -80,6 +80,14 @@
             margin-top: 1em;
             
         }
+        .logout-boton {
+
+            color: black !important;
+            background-color: #771414 ;
+            font-weight: bold;
+            margin-top: 1em;
+
+        }
     </style>
 
     {% block stylesheets %}{% endblock %}
@@ -109,6 +117,13 @@
             <li class="nav-item">
                 <a class="nav-link log-boton"  href="#">Iniciar sesion</a>
             </li>
+            <li class="nav-item">
+                <form method="post" action="/logout">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                    <button class="nav-link logout-boton" type="submit">🔒 Cerrar sesión</button>
+                </form>
+            </li>
+            
         </ul>
     </nav>
 
