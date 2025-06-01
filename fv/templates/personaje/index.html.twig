@@ -3,15 +3,20 @@
 {% block title %}Mis personajes{% endblock %}
 
 {% block body %}
-    <h1>Mis personajes</h1>
+    <h1>👤 Mis personajes</h1>
 
-    <a href="#">+ Crear nuevo personaje</a>
+    <a href="{{ path('personaje_crear') }}">➕ Crear nuevo personaje</a>
 
     <ul>
-        {% for p in personajes %}
-            <li>{{ p.nombre }} (CA: {{ p.ca }})</li>
+        {% for personaje in personajes %}
+            <li>
+                <strong>{{ personaje.nombre }}</strong>
+                — CA: {{ personaje.ca }}
+                <a href="{{ path('personaje_show', { id: personaje.id }) }}">🔍 Ver</a>
+                <a href="{{ path('personaje_editar', { id: personaje.id }) }}">✏️ Editar</a>
+            </li>
         {% else %}
-            <li>No tienes personajes aún.</li>
+            <li>No tienes personajes creados aún.</li>
         {% endfor %}
     </ul>
 {% endblock %}

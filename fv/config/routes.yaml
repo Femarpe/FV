@@ -34,7 +34,7 @@ personaje:
 
 
 ver_personaje_prueba:
-    path: /personaje/prueba
+    path: /personaje_prueba
     controller: Fv\Controller\PersonajePruebaController
 
 ver_personajes:
@@ -53,7 +53,7 @@ guardar_personaje:
 
 
 personaje_prueba:
-    path: /personaje_prueba
+    path: /personaje/prueba
     controller: Fv\Controller\GetPersonajeController
     methods: GET
 
