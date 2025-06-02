@@ -35,6 +35,7 @@
                 <div class="row">
                     {% for campo, valor in {
                     'jugador': personaje.jugador,
+                    'nombre': personaje.nombre,
                     'trasfondo': personaje.trasfondo,
                     'experiencia': personaje.experiencia,
                     'estado_actual': personaje.estado_actual,
@@ -55,7 +56,7 @@
             <div id="atributos" class="tab-pane fade">
                 <h3>⚔️ Atributos</h3>
                 <div class="row">
-                    {% for atributo, valor in personaje %}
+                    {% for atributo, valor in personaje.atributos %}
                     {% if atributo in ['fuerza', 'destreza', 'constitucion',
                     'inteligencia', 'sabiduria', 'carisma'] %}
                     <div class="col-md-4 mb-3">
@@ -231,12 +232,14 @@
 
         <div class="mt-4">
             <button type="submit" class="btn btn-primary">💾 Guardar
-                Cambios</button>
-                <a href="{{ personaje.id
-                ? path('personaje', {'id': personaje.id})
-                : path('personaje_index') }}"
-                class="btn btn-secondary">❌ Cancelar</a>
-            
+            Cambios</button>
+
+            <a href="{{ path('personaje_index') }}" class="btn btn-secondary">❌ Cancelar</a>
+
+
+            <input type="hidden" name="_token" 
+            value="{{ csrf_token('guardar_personaje_' ~ (personaje.id ?? 0)) }}">
+
         </div>
     </form>
 </div>

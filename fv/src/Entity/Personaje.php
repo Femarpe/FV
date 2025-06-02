@@ -96,6 +96,7 @@ class Personaje
 
     #[ORM\Column(type: 'integer')]
     private int $iniciativa = 0;
+    private int $tirada_iniciativa = 0;
 
     #[ORM\Column(length: 255)]
     private string $dados_golpe = '';
@@ -462,6 +463,19 @@ class Personaje
         return $this;
     }
 
+    public function gettirada_iniciativa (): ?int
+    {
+        return $this->tirada_iniciativa ;
+    }
+
+    public function settirada_iniciativa (int $tirada_iniciativa): static
+    {
+        $this->tirada_iniciativa  = $tirada_iniciativa;
+
+        return $this;
+    }
+
+
     public function getdados_golpe(): ?string
     {
         return $this->dados_golpe;
@@ -510,12 +524,12 @@ class Personaje
         return $this;
     }
 
-    public function getConjurosExtra(): array
+    public function getconjuros_extra(): array
     {
         return $this->conjuros_extra;
     }
 
-    public function setConjurosExtra(array $conjuros_extra): static
+    public function setconjuros_extra(array $conjuros_extra): static
     {
         $this->conjuros_extra = $conjuros_extra;
 

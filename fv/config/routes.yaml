@@ -3,14 +3,8 @@ controllers:
     type: attribute
 
 
+#
 
-prueba:
-    path: /prueba
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-    methods: GET
-    defaults:
-        template: "views/prueba.html.twig"
-    
 home:
     path: /
     controller: Fv\Controller\GetHomeController
@@ -21,16 +15,8 @@ landing:
     controller: Fv\Controller\LandingController::index 
     methods: GET
 
-crear_personaje_prueba:
-    path: /crear_personaje_prueba
-    controller: Fv\Controller\GetAddPersonajeController
-    methods: GET
 
 
-personaje:
-    path: /personaje/{id}
-    controller: Fv\Controller\PersonajeController
-    methods: GET
 
 
 ver_personaje_prueba:
@@ -52,10 +38,6 @@ guardar_personaje:
 
 
 
-personaje_prueba:
-    path: /personaje/prueba
-    controller: Fv\Controller\GetPersonajeController
-    methods: GET
 
 campanyas:
     path: /campañas

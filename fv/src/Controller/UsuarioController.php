@@ -12,10 +12,13 @@ class UsuarioController extends AbstractController
     {
         return $this->render("views/home.html.twig");
     }
+
+    
     /*
     #[Route('/usuario', name: 'ruta_usuario')]
     public function index(): Response
     {
+    ver_personajes
         return new Response('<h1>Panel del usuario</h1>');
     }*/
 }

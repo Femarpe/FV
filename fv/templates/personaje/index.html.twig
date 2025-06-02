@@ -5,18 +5,34 @@
 {% block body %}
     <h1>👤 Mis personajes</h1>
 
-    <a href="{{ path('personaje_crear') }}">➕ Crear nuevo personaje</a>
+    <a  class="btn btn-outline-primary btn-sm" href="{{ path('crear_personaje') }}">➕ Crear nuevo personaje</a>
 
-    <ul>
+    {% if personajes is not empty %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for personaje in personajes %}
-            <li>
-                <strong>{{ personaje.nombre }}</strong>
-                — CA: {{ personaje.ca }}
-                <a href="{{ path('personaje_show', { id: personaje.id }) }}">🔍 Ver</a>
-                <a href="{{ path('personaje_editar', { id: personaje.id }) }}">✏️ Editar</a>
-            </li>
-        {% else %}
-            <li>No tienes personajes creados aún.</li>
+            <div class="col">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ personaje.nombre }}</h5>
+                        <p class="card-text">🌟 XP: {{ personaje.experiencia }}</p>
+                        <p class="card-text text-muted small">🧍Trasfondo: {{ personaje.trasfondo }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ path('editar_personaje', { id: personaje.id }) }}"
+                           class="btn btn-outline-primary btn-sm">✏️ Editar</a>
+
+                        <form method="post"
+                              action="{{ path('eliminar_personaje', { id: personaje.id }) }}"
+                              onsubmit="return confirm('¿Seguro que deseas eliminar a {{ personaje.nombre }}?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('eliminar_personaje_' ~ personaje.id) }}">
+                            <button class="btn btn-outline-danger btn-sm">🗑️ Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
+{% else %}
+    <div class="alert alert-info mt-4">No tienes personajes creados aún.</div>
+{% endif %}
 {% endblock %}
