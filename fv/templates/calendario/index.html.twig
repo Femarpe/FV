@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>📅 Calendario de FantasyVerse</h1>
+
+<div id="calendar"></div>
+
+<!-- Menú contextual para días -->
+<div id="context-menu" style="display:none;">
+    <button data-action="evento">➕ Registrar evento</button>
+    <button data-action="disponible">✅ Marcar como disponible</button>
+    <button data-action="no_disponible">❌ Marcar como no disponible</button>
+    <button data-action="eliminar">🗑️ Eliminar mis eventos de ese día</button>
+</div>
+
+<!-- Menú contextual para eventos -->
+<div id="evento-menu" style="display:none;">
+    <button id="editar-evento">📝 Editar título</button>
+    <button id="borrar-evento">🗑️ Borrar evento</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+let fechaSeleccionada = null;
+let eventoSeleccionado = null;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const menuDia = document.getElementById('context-menu');
+    const menuEvento = document.getElementById('evento-menu');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        events: '/api/eventos',
+
+        dateClick: function (info) {
+            fechaSeleccionada = info.dateStr;
+            menuDia.style.left = info.jsEvent.pageX + 'px';
+            menuDia.style.top = info.jsEvent.pageY + 'px';
+            menuDia.style.display = 'block';
+        },
+
+        eventClick: function (info) {
+            const evento = info.event;
+            const tipo = evento.extendedProps.tipo;
+            const esPropio = evento.extendedProps.isOwner;
+
+            if (!esPropio) return;
+
+            eventoSeleccionado = evento;
+
+            console.log("Mostrando menú evento");
+            menuEvento.style.left = info.jsEvent.pageX + 'px';
+            menuEvento.style.top = info.jsEvent.pageY + 'px';
+            menuEvento.style.display = 'block';
+            document.getElementById('editar-evento').style.display = tipo === 'evento' ? 'block' : 'none';
+
+            // Refuerzo
+            setTimeout(() => {
+                if (menuEvento.style.display === 'none') {
+                    menuEvento.style.cssText = 'display: block !important; position: absolute; left: ' + info.jsEvent.pageX + 'px; top: ' + info.jsEvent.pageY + 'px; z-index: 10000; background: white; border: 1px solid black;';
+                }
+            }, 50);
+        }
+    });
+
+    calendar.render();
+
+    // Ocultar menús si haces clic fuera
+    document.addEventListener('click', function (e) {
+        if (!menuDia.contains(e.target)) menuDia.style.display = 'none';
+        if (!menuEvento.contains(e.target)) menuEvento.style.display = 'none';
+    });
+
+    // Acciones menú contextual de día
+    document.querySelectorAll('#context-menu button').forEach(button => {
+        button.addEventListener('click', function () {
+            const accion = this.dataset.action;
+            const payload = {
+                tipo: accion,
+                fecha: fechaSeleccionada
+            };
+
+            if (accion === 'evento') {
+                const titulo = prompt("Título del evento:");
+                if (!titulo) return;
+                payload.titulo = titulo;
+            }
+
+            if (accion === 'eliminar') {
+                if (!confirm("¿Eliminar tus eventos de ese día?")) return;
+
+                fetch('/api/evento/borrar-dia', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fecha: fechaSeleccionada })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            calendar.refetchEvents();
+                        } else {
+                            alert('Error: ' + data.error);
+                        }
+                    });
+
+                menuDia.style.display = 'none';
+                return;
+            }
+
+            fetch('/api/evento', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        calendar.refetchEvents();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                });
+
+            menuDia.style.display = 'none';
+        });
+    });
+
+    // Editar evento
+    document.getElementById('editar-evento').addEventListener('click', function () {
+        const nuevoTitulo = prompt('Nuevo título:', eventoSeleccionado.title);
+        if (!nuevoTitulo) return;
+
+        fetch(`/api/evento/${eventoSeleccionado.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo: nuevoTitulo })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    calendar.refetchEvents();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+
+        menuEvento.style.display = 'none';
+    });
+
+    // Borrar evento
+    document.getElementById('borrar-evento').addEventListener('click', function () {
+        if (!confirm("¿Eliminar este evento?")) return;
+
+        fetch(`/api/evento/${eventoSeleccionado.id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    calendar.refetchEvents();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+
+        menuEvento.style.display = 'none';
+    });
+});
+</script>
+
+<style>
+#calendar {
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+#context-menu, #evento-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+#context-menu button, #evento-menu button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    text-align: left;
+    cursor: pointer;
+}
+
+#context-menu button:hover, #evento-menu button:hover {
+    background-color: #f1f1f1;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ campanya.id ? 'Editar campaña' : 'Crear campaña' }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">
+        {{ campanya.id ? '✏️ Editar campaña' : '➕ Crear nueva campaña' }}
+    </h1>
+
+    <form method="post" action="{{ path('guardar_campanya', { id: campanya.id|default('') }) }}">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="{{ campanya.nombre }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea name="descripcion" class="form-control" rows="3">{{ campanya.descripcion }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Resumen de la sesión anterior</label>
+            <textarea name="resumen_sesion" class="form-control" rows="3">{{ campanya.resumenSesion }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Estado actual</label>
+            <input type="text" name="estado_actual" class="form-control" value="{{ campanya.estadoActual }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Localización actual</label>
+            <input type="text" name="localizacion_actual" class="form-control" value="{{ campanya.localizacionActual }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Día en el calendario</label>
+            <input type="text" name="dia_en_el_calendario" class="form-control" value="{{ campanya.diaEnElCalendario }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Notas del director</label>
+            <textarea name="notas_director" class="form-control" rows="4">{{ campanya.notasDirector }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <a href="{{ path('campanya_index') }}" class="btn btn-secondary">❌ Cancelar</a>
+        <input type="hidden" name="id" value="{{ campanya.id ?? '' }}">
+
+    </form>
+</div>
+{% endblock %}

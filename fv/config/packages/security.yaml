@@ -33,6 +33,10 @@ security:
         - { path: ^/usuario, roles: ROLE_USER }
         - { path: ^/invitado, roles: ROLE_INVITADO }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/personaje, roles: PUBLIC_ACCESS }
+        - { path: ^/personaje, roles: ROLE_USER }
+        - { path: ^/campanyas, roles: ROLE_USER }
+        - { path: ^/eventos, roles: ROLE_USER }
+
+
 
 
