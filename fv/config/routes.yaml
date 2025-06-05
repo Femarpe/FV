@@ -1,5 +1,5 @@
 controllers:
-    resource: ../src/Controller/
+    resource: ../src/FantasyVerse/Controller/
     type: attribute
 
 
@@ -7,12 +7,12 @@ controllers:
 
 home:
     path: /
-    controller: Fv\Controller\GetHomeController
+    controller: Fv\FantasyVerse\Controller\GetHomeController
     methods: GET
 
 landing:
     path: /landing_prueba
-    controller: Fv\Controller\LandingController::index 
+    controller: Fv\FantasyVerse\Controller\LandingController::index 
     methods: GET
 
 
@@ -21,19 +21,19 @@ landing:
 
 ver_personaje_prueba:
     path: /personaje_prueba
-    controller: Fv\Controller\PersonajePruebaController
+    controller: Fv\FantasyVerse\Controller\PersonajePruebaController
 
 ver_personajes:
     path: /personajes
-    controller: Fv\Controller\PersonajeController
+    controller: Fv\FantasyVerse\Controller\PersonajeController
 
 editar_personaje:
     path: /personaje/editar/{id}
-    controller: Fv\Controller\PersonajeController::editarPersonaje
+    controller: Fv\FantasyVerse\Controller\PersonajeController::editarPersonaje
 
 guardar_personaje:
     path: /personaje/guardar/{id}
-    controller: Fv\Controller\PersonajeController::guardarPersonaje
+    controller: Fv\FantasyVerse\Controller\PersonajeController::guardarPersonaje
     methods: [POST]
 
 
@@ -41,33 +41,33 @@ guardar_personaje:
 
 campanyas:
     path: /campañas
-    controller: Fv\Controller\CampañasController::index
+    controller: Fv\FantasyVerse\Controller\CampañasController::index
 
 eventos:
     path: /eventos
-    controller: Fv\Controller\EventosController::index
+    controller: Fv\FantasyVerse\Controller\EventosController::index
 
 perfil:
     path: /perfil
-    controller: Fv\Controller\PerfilController::index
+    controller: Fv\FantasyVerse\Controller\PerfilController::index
 
 
 usuario_index:
     path: /usuarios
-    controller: Fv\Controller\UsuarioController::index
+    controller: Fv\FantasyVerse\Controller\UsuarioController::index
 
 
 ruta_admin:
     path: /admin
-    controller: Fv\Controller\AdminController::index
+    controller: Fv\FantasyVerse\Controller\AdminController::index
 
 ruta_usuario:
     path: /usuario
-    controller: Fv\Controller\UsuarioController
+    controller: Fv\FantasyVerse\Controller\UsuarioController
 
 ruta_invitado:
     path: /invitado
-    controller: Fv\Controller\InvitadoController::index
+    controller: Fv\FantasyVerse\Controller\InvitadoController::index
 
 logout:
     path: /logout

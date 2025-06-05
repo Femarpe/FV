@@ -1,6 +1,6 @@
 # config/packages/maker.yaml
 when@dev:
     maker:
-        root_namespace: 'Fv'
+        root_namespace: 'Fv\FantasyVerse'
         generate_final_classes: true
         generate_final_entities: false

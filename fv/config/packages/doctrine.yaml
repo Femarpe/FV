@@ -21,8 +21,8 @@ doctrine:
             Fv:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'Fv\Entity'
+                dir: '%kernel.project_dir%/src/FantasyVerse/Entity'
+                prefix: 'Fv\FantasyVerse\Entity'
                 alias: Fv
         controller_resolver:
             auto_mapping: false

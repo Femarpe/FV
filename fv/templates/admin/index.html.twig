@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block body %}
+    <h1>🛠️ Panel de Administración</h1>
+
+    <h2>👤 Personajes ({{ personajes|length }})</h2>
+    <ul>
+        {% for p in personajes %}
+            <li>{{ p.nombre }} (Jugador: {{ p.jugador }})</li>
+        {% endfor %}
+    </ul>
+
+    <h2>🎲 Campañas ({{ campanyas|length }})</h2>
+    <ul>
+        {% for c in campanyas %}
+            <li>{{ c.nombre }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>🗓️ Eventos ({{ eventos|length }})</h2>
+    <ul>
+        {% for e in eventos %}
+            <li>{{ e.titulo }} ({{ e.fecha ? e.fecha|date('Y-m-d') : 'Sin fecha' }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

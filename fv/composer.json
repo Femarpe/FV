@@ -13,7 +13,7 @@
         "doctrine/orm": "^3.3.3",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.7",
+        "symfony/flex": "^2.7.1",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/runtime": "7.2.*",
@@ -30,6 +30,7 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
+        "optimize-autoloader": true,
         "bump-after-update": true,
         "sort-packages": true
     },
@@ -75,6 +76,8 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.63"
+        "symfony/maker-bundle": "^1.63",
+        "symfony/stopwatch": "7.2.*",
+        "symfony/web-profiler-bundle": "7.2.*"
     }
 }

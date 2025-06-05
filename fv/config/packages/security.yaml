@@ -1,12 +1,12 @@
 security:
     password_hashers:
-        Fv\Entity\Usuario:
+        Fv\FantasyVerse\Entity\Usuario:
             algorithm: auto
 
     providers:
         usuarios:
             entity:
-                class: Fv\Entity\Usuario
+                class: Fv\FantasyVerse\Entity\Usuario
                 property: correo
 
     firewalls:
@@ -20,7 +20,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                success_handler: Fv\Security\RedireccionPorRol
+                success_handler: Fv\FantasyVerse\Security\RedireccionPorRol
                 enable_csrf: true
             logout:
                 path: logout

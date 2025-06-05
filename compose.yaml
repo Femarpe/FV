@@ -30,7 +30,7 @@ services:
       - mysql
     networks:
       - fv-network
-    
+    user: ${CURRENT_UID}
       
 
   mysql:
