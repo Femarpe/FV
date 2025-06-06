@@ -25,7 +25,7 @@ security:
             logout:
                 path: logout
                 target: /login
-
+            
                 
 
     access_control:
@@ -33,9 +33,10 @@ security:
         - { path: ^/usuario, roles: ROLE_USER }
         - { path: ^/invitado, roles: ROLE_INVITADO }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/personaje, roles: ROLE_USER }
-        - { path: ^/campanyas, roles: ROLE_USER }
-        - { path: ^/eventos, roles: ROLE_USER }
+
+        - { path: ^/personaje, roles: [ROLE_USER, ROLE_ADMIN]}
+        - { path: ^/campanyas, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/eventos, roles: [ROLE_USER, ROLE_ADMIN]}
 
 
 

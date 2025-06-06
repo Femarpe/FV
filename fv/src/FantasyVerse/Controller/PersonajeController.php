@@ -151,9 +151,12 @@ class PersonajeController extends AbstractController
 
         $usuario = $this->getUser()->getUserIdentifier();
 
-        if ($personaje->getJugador() !== $usuario) {
+        if ($personaje->getJugador() !== $usuario && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
+
+        
+        
 
         return $this->render('personaje/personaje.html.twig', [
             'personaje' => $personaje
@@ -168,7 +171,7 @@ class PersonajeController extends AbstractController
 
     /** Guardar un personaje */
     #[Route('/personajes/guardar/{id}', name: 'guardar_personaje')]
-    public function guardarPersonaje(Uuid $id, Request $request, EntityManagerInterface $em): Response
+    public function guardarPersonaje(string $id, Request $request, EntityManagerInterface $em): Response
     {
 
         if ($id == 0) {
@@ -185,7 +188,7 @@ class PersonajeController extends AbstractController
         $usuario = $this->getUser()->getUserIdentifier();
 
         // Solo deniega acceso si se intenta editar un personaje ajeno
-        if ($id && $personaje->getJugador() !== $usuario) {
+        if ($id && $personaje->getJugador() !== $usuario  && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
@@ -270,13 +273,13 @@ class PersonajeController extends AbstractController
             throw $this->createNotFoundException('Personaje no encontrado');
         }
 
-        if ($personaje->getJugador() !== $this->getUser()->getUserIdentifier()) {
+        if ($personaje->getJugador() !== $this->getUser()->getUserIdentifier()  && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
         // Verificar token CSRF
         $token = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('eliminar_personaje_' . $personaje->getId(), $token)) {
+        if (!$this->isCsrfTokenValid('eliminar_personaje_' . $personaje->getId(), $token) && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Token CSRF inválido');
         }
 

@@ -19,6 +19,7 @@ class AdminController extends AbstractController
         EventoRepository $eventoRepo
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
 
         return $this->render('admin/index.html.twig', [
             'personajes' => $personajeRepo->findAll(),
@@ -46,7 +47,7 @@ class AdminController extends AbstractController
             'campanyas' => $repo->findAll(),
         ]);
     }
-    
+
     #[Route('/eventos', name: 'admin_eventos')]
     public function eventos(EventoRepository $repo): Response
     {

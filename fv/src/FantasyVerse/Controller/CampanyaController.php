@@ -53,10 +53,12 @@ class CampanyaController extends AbstractController
 
         $usuario = $this->getUser()->getUserIdentifier();
 
-        if ($campanya->getCreador() !== $usuario) {
+        
+        if ($campanya->getCreador() !== $usuario && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
-
+        
+        
         return $this->render('campanya/campanya.html.twig', [
             'campanya' => $campanya
         ]);
@@ -79,9 +81,10 @@ class CampanyaController extends AbstractController
                 $campanya->setCreador($usuario);
             }
         
-            if ($campanya->getCreador() !== $usuario) {
+            if ($campanya->getCreador() !== $usuario && !$this->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException();
             }
+            
         } else {
             $campanya = new Campanya();
             $campanya->setCreador($usuario);
@@ -116,9 +119,10 @@ class CampanyaController extends AbstractController
 
         $usuario = $this->getUser()->getUserIdentifier();
 
-        if ($campanya->getCreador() !== $usuario) {
+        if ($campanya->getCreador() !== $usuario && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
+        
 
         $em->remove($campanya);
         $em->flush();

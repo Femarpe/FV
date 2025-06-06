@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ campanya.nombre }}</td>
                 <td>{{ campanya.creador }}</td>
-                <td>{{ campanya.descripcion|u.truncate(50) }}</td>
+                <td>{{ campanya.descripcion|slice(0, 50) ~ '…' }}</td>
                 <td>
                     <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-sm btn-primary">✏️ Editar</a>
                 </td>
