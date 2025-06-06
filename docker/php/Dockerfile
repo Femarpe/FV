@@ -15,10 +15,12 @@ RUN apk --no-cache add \
     bash \
     oniguruma-dev \
     icu-dev \
-    zlib-dev
+    zlib-dev \
+    composer \
+    php-ctype php-xml php-tokenizer php-session php-dom php-simplexml
 
 # Instala y habilita extensiones
-RUN docker-php-ext-install pdo pdo_mysql simplexml zip
+RUN docker-php-ext-install pdo pdo_mysql simplexml zip ctype xml session dom simplexml
 
 # Instala Xdebug (opcional para desarrollo)
 RUN pecl install xdebug-3.3.2 && docker-php-ext-enable xdebug
