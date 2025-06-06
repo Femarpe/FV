@@ -1,0 +1,30 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Administrar eventos{% endblock %}
+
+{% block body %}
+<h1>🗓️ Administración de eventos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for evento in eventos %}
+            <tr>
+                <td>{{ evento.titulo }}</td>
+                <td>{{ evento.fecha ? evento.fecha|date('Y-m-d') : 'Sin fecha' }}</td>
+                <td>{{ evento.descripcion|slice(0, 50) ~ '…' }}</td>
+
+            </tr>
+        {% else %}
+            <tr><td colspan="3">No hay eventos registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">⬅ Volver</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Administrar personajes{% endblock %}
+
+{% block body %}
+<h1>👤 Administración de personajes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Jugador</th>
+            <th>Clase de Armadura</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for personaje in personajes %}
+            <tr>
+                <td>{{ personaje.nombre }}</td>
+                <td>{{ personaje.jugador }}</td>
+                <td>{{ personaje.ca }}</td>
+                <td>
+                    <a href="{{ path('editar_personaje', { id: personaje.id }) }}" class="btn btn-sm btn-primary">✏️ Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">No hay personajes registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">⬅ Volver</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Administrar campañas{% endblock %}
+
+{% block body %}
+<h1>🎲 Administración de campañas</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Director</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for campanya in campanyas %}
+            <tr>
+                <td>{{ campanya.nombre }}</td>
+                <td>{{ campanya.creador }}</td>
+                <td>{{ campanya.descripcion|u.truncate(50) }}</td>
+                <td>
+                    <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-sm btn-primary">✏️ Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">No hay campañas registradas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">⬅ Volver</a>
+{% endblock %}
