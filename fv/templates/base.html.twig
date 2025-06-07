@@ -129,11 +129,13 @@
     <nav class="sidebar">
         <img src="/images/logo_FV.png" alt="FantasyVerse Logo">
         <ul class="nav flex-column w-100">
+            {% if is_granted('ROLE_USER') %}
             <li class="nav-item">
-                <a class="nav-link {% if app.request.get('_route') == 'landing' %}active{% endif %}" href="{{ path('landing') }}">🏠 Inicio</a>
+                <a class="nav-link {% if app.request.get('_route') == 'landing' %}active{% endif %}" href="{{ path('landing') }}">🐉Inicio</a>
             </li>
+            {% endif %}
             <li class="nav-item">
-                <a  class="nav-link {% if app.request.get('_route') == 'ver_personaje_prueba' %}active{% endif %}" href="{{ path('ver_personaje_prueba') }}">🐉 Personaje ejemplo</a>
+                <a  class="nav-link {% if app.request.get('_route') == 'perfil_usuario' %}active{% endif %}" href="perfil_usuario">👤 Mi Perfil</a>
             </li>
             <li class="nav-item">
                 <a  class="nav-link {% if app.request.get('_route') == 'ver_personajes' %}active{% endif %}" href="{{ path('ver_personajes') }}">🗡️ Personajes</a>
@@ -144,12 +146,18 @@
             <li class="nav-item">
                 <a  class="nav-link {% if app.request.get('_route') == 'calendario_index' %}active{% endif %}" href="{{ path('calendario_index') }}">📅 Calendario</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
-                <a  class="nav-link {% if app.request.get('_route') == 'perfil' %}active{% endif %}" href="#">👤 Mi Perfil</a>
+                <a class="nav-link {% if app.request.get('_route') == 'admin_dashboard' %}active{% endif %}" href="{{ path('admin_dashboard') }}">📊Backoffice</a>
             </li>
+            {% endif %}
+            
+            <!-- Botón de Cerrar Sesión 
             <li class="nav-item">
                 <a class="nav-link log-boton"  href="/login">Iniciar sesion</a>
             </li>
+            -->
+
             <li class="nav-item">
                 <form method="post" action="/logout">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">

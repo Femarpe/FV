@@ -1,33 +1,80 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión | FantasyVerse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% block title %}Iniciar sesión{% endblock %}
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(to right, #1D3557, #457B9D);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .login-box {
+            background-color: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-box h1 {
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            color: #1D3557;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .btn-login {
+            background-color: #1D3557;
+            color: white;
+            font-weight: bold;
+        }
+        .btn-login:hover {
+            background-color: #27496d;
+        }
+    </style>
+</head>
 
-{% block body %}
-    <h1>Iniciar sesión</h1>
+<body>
+    <div class="login-box">
+        <h1 class="text-center">Iniciar sesión</h1>
 
-    {% if error %}
-        <div class="alert alert-danger">
-            {{ error.messageKey|trans(error.messageData, 'security') }}
-        </div>
-    {% endif %}
-    {% for mensaje in app.flashes('logout') %}
-    <div class="alert alert-success">
-        {{ mensaje }}
+        {% if error %}
+            <div class="alert alert-danger">
+                <label for="error" class="form-label">Credenciales incorrectas</label>
+            </div>
+        {% endif %}
+
+        {% for mensaje in app.flashes('logout') %}
+            <div class="alert alert-success">
+                {{ mensaje }}
+            </div>
+        {% endfor %}
+
+        <form method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="text" id="correo" name="_username" class="form-control" value="{{ last_username }}" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="contraseña" class="form-label">Contraseña</label>
+                <input type="password" id="contraseña" name="_password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100 mt-3">Entrar</button>
+        </form>
     </div>
-    {% endfor %}
-    <form method="post">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <div>
-            <label for="correo">Correo:</label>
-            <input type="text" id="correo" name="_username" value="{{ last_username }}">
-        </div>
-
-        <div>
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="_password">
-        </div>
-
-        <button type="submit">Entrar</button>
-    </form>
-{% endblock %}
+</body>
+</html>

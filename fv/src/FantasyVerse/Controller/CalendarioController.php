@@ -27,7 +27,7 @@ class CalendarioController extends AbstractController
 
         foreach ($eventos as $evento) {
             $data[] = [
-                'id' => $evento->get_id(),
+                'id' => $evento->getid(),
                 'title' => $evento->gettitulo(),
                 'start' => $evento->getfecha()->format('Y-m-d'),
                 'color' => match ($evento->gettipo()) {

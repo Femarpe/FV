@@ -7,24 +7,44 @@
         <h1>Bienvenido a FantasyVerse</h1>
         <p>Explora mundos épicos y juega campañas inolvidables.</p>
     </div>
-
+    
+    {% if is_granted('ROLE_USER') %}
     <section class="container mt-4">
-        <h2 class="text-center mb-4">Campañas Destacadas</h2>
+        <h2 class="text-center mb-4">🗡️ Tus Personajes</h2>
+        
         <div class="row">
-            {% for campaign in campaigns %}
+            {% for personaje in personajes %}
                 <div class="col-md-4">
                     <div class="card campaign-card">
-                        <img src="{{ campaign.image }}" class="card-img-top" alt="Imagen de campaña">
                         <div class="card-body">
-                            <h5 class="card-title">{{ campaign.title }}</h5>
-                            <p class="card-text">{{ campaign.description }}</p>
-                            <a href="#" class="btn btn-primary">Ver más</a>
+                            <h5 class="card-title">{{ personaje.nombre }}</h5>
+                            <a href="{{ path('editar_personaje', { id: personaje.id }) }}" class="btn btn-primary">Editar</a>
                         </div>
                     </div>
                 </div>
+            {% else %}
+                <p class="text-center">No tienes personajes todavía.</p>
+            {% endfor %}
+        </div>
+    
+        <h2 class="text-center mt-5 mb-4">🎲 Tus Campañas</h2>
+        <div class="row">
+            {% for campanya in campanyas %}
+                <div class="col-md-4">
+                    <div class="card campaign-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ campanya.nombre }}</h5>
+                            <p class="card-text">{{ campanya.descripcion|length > 80 ? campanya.descripcion|slice(0, 80) ~ '...' : campanya.descripcion }}</p>
+                            <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-primary">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center">No tienes campañas todavía.</p>
             {% endfor %}
         </div>
     </section>
+    {% endif %}
 
     <style>
         /* Estilo de bienvenida */

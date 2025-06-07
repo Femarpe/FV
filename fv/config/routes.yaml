@@ -11,17 +11,18 @@ home:
     methods: GET
 
 landing:
-    path: /landing_prueba
-    controller: Fv\FantasyVerse\Controller\LandingController::index 
+    path: /landing
+    controller: Fv\FantasyVerse\Controller\LandingController
     methods: GET
 
 
+perfil_usuario:
+    path: /perfil_usuario
+    controller: Fv\FantasyVerse\Controller\PerfilUsuarioController::perfil
 
 
 
-ver_personaje_prueba:
-    path: /personaje_prueba
-    controller: Fv\FantasyVerse\Controller\PersonajePruebaController
+
 
 ver_personajes:
     path: /personajes

@@ -10,7 +10,7 @@
         <tr>
             <th>Título</th>
             <th>Fecha</th>
-            <th>Descripción</th>
+            <th>Usuario</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +18,10 @@
             <tr>
                 <td>{{ evento.titulo }}</td>
                 <td>{{ evento.fecha ? evento.fecha|date('Y-m-d') : 'Sin fecha' }}</td>
-                <td>{{ evento.descripcion|slice(0, 50) ~ '…' }}</td>
-
+                <td>{{ evento.usuario ? evento.usuario.correo : 'Sin autor' }}</td>
+                <td>
+                    <a href="{{ path('api_evento_borrar', { id: evento.id }) }}" class="btn btn-sm btn-primary">🗑️ Borrar</a>
+                </td>
             </tr>
         {% else %}
             <tr><td colspan="3">No hay eventos registrados.</td></tr>

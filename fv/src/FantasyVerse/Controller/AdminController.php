@@ -57,7 +57,16 @@ class AdminController extends AbstractController
             'eventos' => $repo->findAll(),
         ]);
     }
+    
+    #[Route('/usuarios', name: 'admin_usuarios')]
+    public function usuarios(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Aquí podrías implementar la lógica para listar usuarios, si es necesario.
+        // Por ahora, simplemente redirigimos a la página de inicio del admin.
+        return $this->redirectToRoute('admin_dashboard');
+    }
 
 
 }

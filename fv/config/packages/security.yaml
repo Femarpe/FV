@@ -35,7 +35,7 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
 
         - { path: ^/personaje, roles: [ROLE_USER, ROLE_ADMIN]}
-        - { path: ^/campanyas, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/campanyas, roles: [ROLE_USER, ROLE_ADMIN]}
         - { path: ^/eventos, roles: [ROLE_USER, ROLE_ADMIN]}
 
 

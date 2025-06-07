@@ -19,6 +19,10 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $correo = null;
 
+
+    #[ORM\Column(length: 180)]
+    private ?string $nombre = null;
+
     /**
      * @var list<string> The user roles
      */
@@ -44,6 +48,19 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCorreo(string $correo): static
     {
         $this->correo = $correo;
+
+        return $this;
+    }
+
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): static
+    {
+        $this->nombre = $nombre;
 
         return $this;
     }

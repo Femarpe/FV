@@ -1,0 +1,37 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block body %}
+<h1>👥 Gestión de Usuarios</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>📛 Nombre</th>
+            <th>📧 Correo</th>
+            <th>🎭 Rol</th>
+            <th>⚙️ Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.roles ? usuario.roles[0]|replace({'ROLE_': ''}) : 'Desconocido' }}</td>
+                <td>
+                    <a href="{{ path('admin_editar_usuario', { id: usuario.id }) }}" class="btn btn-sm btn-primary">✏️ Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay usuarios registrados.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('admin_nuevo_usuario') }}" class="btn btn-success mt-3">➕ Crear nuevo usuario</a>
+<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary mt-3">⬅ Volver al panel</a>
+{% endblock %}

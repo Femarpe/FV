@@ -36,7 +36,7 @@ class Evento
     private ?Campanya $campanya = null;
 
     // Getters y Setters
-    public function get_id(): ?int { return $this->id; }
+    public function getid(): ?int { return $this->id; }
     public function gettitulo(): string { return $this->titulo; }
     public function settitulo(string $titulo): self { $this->titulo = $titulo; return $this; }
 

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>👤 Perfil de Usuario</h1>
+
+    {% for mensaje in app.flashes('success') %}
+        <div class="alert alert-success">{{ mensaje }}</div>
+    {% endfor %}
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" value="{{ usuario.nombre }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control" name="correo" value="{{ usuario.correo }}">
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Nueva contraseña (opcional)</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+        
+        
+
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            {% if is_granted('ROLE_ADMIN') %}
+                <select name="rol" class="form-control">
+                    <option value="ROLE_USER" {% if 'ROLE_USER' in usuario.roles %}selected{% endif %}>Usuario</option>
+                    <option value="ROLE_ADMIN" {% if 'ROLE_ADMIN' in usuario.roles %}selected{% endif %}>Administrador</option>
+                </select>
+            {% else %}
+                <input type="text" class="form-control" value="{{ usuario.roles[0] }}" readonly>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}
