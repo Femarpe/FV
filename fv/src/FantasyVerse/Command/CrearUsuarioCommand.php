@@ -27,6 +27,7 @@ class CrearUsuarioCommand extends Command
     protected function configure(): void
     {
         $this->addArgument('correo', InputArgument::REQUIRED, 'Correo electrónico');
+        $this->addArgument('nombre', InputArgument::REQUIRED, 'Nombre del usuario');
         $this->addArgument('contraseña', InputArgument::REQUIRED, 'Contraseña');
         $this->addArgument('rol', InputArgument::REQUIRED, 'Rol: admin | usuario | invitado');
     }
@@ -34,11 +35,13 @@ class CrearUsuarioCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $correo = $input->getArgument('correo');
+        $nombre = $input->getArgument('nombre');
         $password = $input->getArgument('contraseña');
         $rol = strtoupper('ROLE_' . $input->getArgument('rol'));
 
         $usuario = new Usuario();
         $usuario->setCorreo($correo);
+        $usuario->setNombre($nombre);
         $usuario->setRoles([$rol]);
         $usuario->setPassword($this->hasher->hashPassword($usuario, $password));
 
