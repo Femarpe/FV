@@ -169,12 +169,6 @@
             </li>
             {% endif %}
 
-            <!-- Botón de Cerrar Sesión 
-            <li class="nav-item">
-                <a class="nav-link log-boton"  href="/login">Iniciar sesion</a>
-            </li>
-            -->
-
             <li class="nav-item">
                 <form method="post" action="/logout">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
