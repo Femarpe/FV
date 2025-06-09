@@ -25,12 +25,23 @@ class PerfilUsuarioController extends AbstractController
             $usuario->setNombre($request->request->get('nombre'));
             $usuario->setCorreo($request->request->get('correo'));
 
-            $rawPassword = $request->request->get('password');
-            if (!empty($rawPassword)) {
-                $hashedPassword = $hasher->hashPassword($usuario, $rawPassword);
+            $password1 = $request->request->get('password');
+            $password2 = $request->request->get('password2');
+
+            if (!empty($password1) || !empty($password2)) {
+                if ($password1 !== $password2) {
+                    return $this->render('usuario/perfil.html.twig', [
+                        'usuario' => $usuario,
+                        'admin' => $this->isGranted('ROLE_ADMIN'),
+                        'error_contraseña' => 'Las contraseñas no coinciden.'
+                    ]);
+                }
+
+                $hashedPassword = $hasher->hashPassword($usuario, $password1);
                 $usuario->setPassword($hashedPassword);
             }
-            
+
+
             if ($this->isGranted('ROLE_ADMIN')) {
                 $usuario->setRoles([$request->request->get('rol')]);
             }

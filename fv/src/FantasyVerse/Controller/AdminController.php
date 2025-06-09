@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Fv\FantasyVerse\Repository\PersonajeRepository;
 use Fv\FantasyVerse\Repository\CampanyaRepository;
 use Fv\FantasyVerse\Repository\EventoRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Fv\FantasyVerse\Entity\Evento;
 
 #[Route('/admin')]
 class AdminController extends AbstractController
@@ -58,6 +60,29 @@ class AdminController extends AbstractController
         ]);
     }
     
+    #[Route('/admin/eventos/borrar/{id}', name: 'admin_evento_borrar')]
+    public function borrarConfirmacion(Evento $evento): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        return $this->render('admin/evento/eventoBorrar.html.twig', [
+            'evento' => $evento,
+        ]);
+    }
+
+    #[Route('/admin/eventos/borrar/{id}/confirmado', name: 'admin_evento_borrar_confirmado', methods: ['POST'])]
+    public function borrarConfirmado(Evento $evento, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em->remove($evento);
+        $em->flush();
+
+        $this->addFlash('success', '✅ Evento eliminado correctamente.');
+        return $this->redirectToRoute('admin_eventos');
+    }
+    
+
     #[Route('/usuarios', name: 'admin_usuarios')]
     public function usuarios(): Response
     {

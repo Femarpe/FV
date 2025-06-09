@@ -45,24 +45,27 @@ document.addEventListener('DOMContentLoaded', function () {
             const evento = info.event;
             const tipo = evento.extendedProps.tipo;
             const esPropio = evento.extendedProps.isOwner;
+            const creador = evento.extendedProps.creador;
 
-            if (!esPropio) return;
+            if (!esPropio) {
+                alert(`Este evento fue creado por: ${creador}`);
+                return;
+            }
 
             eventoSeleccionado = evento;
 
-            console.log("Mostrando menú evento");
             menuEvento.style.left = info.jsEvent.pageX + 'px';
             menuEvento.style.top = info.jsEvent.pageY + 'px';
             menuEvento.style.display = 'block';
             document.getElementById('editar-evento').style.display = tipo === 'evento' ? 'block' : 'none';
 
-            // Refuerzo
             setTimeout(() => {
                 if (menuEvento.style.display === 'none') {
                     menuEvento.style.cssText = 'display: block !important; position: absolute; left: ' + info.jsEvent.pageX + 'px; top: ' + info.jsEvent.pageY + 'px; z-index: 10000; background: white; border: 1px solid black;';
                 }
             }, 50);
         }
+
     });
 
     calendar.render();

@@ -20,7 +20,7 @@
                 <td>{{ evento.fecha ? evento.fecha|date('Y-m-d') : 'Sin fecha' }}</td>
                 <td>{{ evento.usuario ? evento.usuario.correo : 'Sin autor' }}</td>
                 <td>
-                    <button id="borrar-evento" ><script>const eventoId = "{{ evento.id }}"</script>🗑️ Borrar evento</button>
+                    <a href="{{ path('admin_evento_borrar', { id: evento.id }) }}" class="btn btn-sm btn-danger">🗑️ Borrar</a>
                 </td>
             </tr>
         {% else %}

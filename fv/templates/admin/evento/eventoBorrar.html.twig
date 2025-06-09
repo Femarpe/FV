@@ -1,41 +1,19 @@
 {% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}Administrar eventos{% endblock %}
+{% block title %}Confirmar borrado{% endblock %}
 
 {% block body %}
-<h1>🗓️ Administración de eventos</h1>
+<h1>⚠️ Confirmar eliminación del evento</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Título</th>
-            <th>Fecha</th>
-            <th>Usuario</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for evento in eventos %}
-            <tr>
-                <td>{{ evento.titulo }}</td>
-                <td>{{ evento.fecha ? evento.fecha|date('Y-m-d') : 'Sin fecha' }}</td>
-                <td>{{ evento.usuario ? evento.usuario.correo : 'Sin autor' }}</td>
-                <td>
-                    <button id="borrar-evento" ><script>const eventoId = "{{ evento.id }}"</script>🗑️ Borrar evento</button>
-                </td>
-            </tr>
-        {% else %}
-            <tr><td colspan="3">No hay eventos registrados.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
-<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">⬅ Volver</a>
-<script>
-    document.getElementById('borrar-evento').addEventListener('click', function () {
-        if (!confirm("¿Eliminar este evento?")) return;
-        
-        fetch(`/api/evento/${eventoId}`, {
-            method: 'DELETE'
-        })
-    });
-</script>
+<div class="alert alert-warning">
+    <p><strong>Título:</strong> {{ evento.titulo }}</p>
+    <p><strong>Fecha:</strong> {{ evento.fecha ? evento.fecha|date('Y-m-d') : 'Sin fecha' }}</p>
+    <p><strong>Descripción:</strong> {{ evento.descripcion }}</p>
+</div>
+
+<form method="post" action="{{ path('admin_evento_borrar_confirmado', { id: evento.id }) }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('borrar_evento_' ~ evento.id) }}">
+    <button type="submit" class="btn btn-danger">🗑️ Sí, borrar</button>
+    <a href="{{ path('admin_eventos') }}" class="btn btn-secondary">⬅ Cancelar</a>
+</form>
 {% endblock %}

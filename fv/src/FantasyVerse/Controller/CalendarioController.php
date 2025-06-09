@@ -36,7 +36,8 @@ class CalendarioController extends AbstractController
                     default => '#339af0'
                 },
                 'tipo' => $evento->gettipo(),
-                'isOwner' => $evento->getusuario() === $this->getUser()
+                'isOwner' => $evento->getusuario() === $this->getUser(),
+                'creador' => $evento->getUsuario()?->getNombre() ?? 'Anónimo'
             ];
         }
 
@@ -77,7 +78,7 @@ class CalendarioController extends AbstractController
                     ->getOneOrNullResult();
 
                 if ($existente) {
-                    if ($existente->get_tipo() === $tipo) {
+                    if ($existente->gettipo() === $tipo) {
                         return new JsonResponse(['error' => 'Ya marcaste ese estado.'], 400);
                     } else {
                         $em->remove($existente);
@@ -139,7 +140,7 @@ class CalendarioController extends AbstractController
         }
 
         $usuario = $this->getUser();
-        if ($evento->getusuario() !== $usuario) {
+        if ($evento->getusuario() !== $usuario && !$this->isGranted('ROLE_ADMIN')) {
             return new JsonResponse(['error' => 'No puedes borrar este evento'], 403);
         }
 
