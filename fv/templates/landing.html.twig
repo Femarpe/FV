@@ -3,47 +3,67 @@
 {% block title %}FantasyVerse - Explora Mundos de Rol{% endblock %}
 
 {% block body %}
-    <div class="welcome-box text-center text-white">
-        <h1>Bienvenido a FantasyVerse</h1>
-        <p>Explora mundos épicos y juega campañas inolvidables.</p>
+<div class="welcome-box text-center text-white">
+    <h1>Bienvenido a FantasyVerse</h1>
+    <p>Explora mundos épicos y juega campañas inolvidables.</p>
+</div>
+
+{% if is_granted('ROLE_USER') %}
+<section class="container mt-4">
+    <h2 class="text-center mb-4">🗡️ Tus Personajes</h2>
+
+    <div class="row">
+        {% for personaje in personajes %}
+        <div class="col-md-4">
+            <div class="card campaign-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ personaje.nombre }}</h5>
+                    <a href="{{ path('editar_personaje', { id: personaje.id }) }}" class="btn btn-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No tienes personajes todavía.</p>
+        {% endfor %}
     </div>
-    
-    {% if is_granted('ROLE_USER') %}
-    <section class="container mt-4">
-        <h2 class="text-center mb-4">🗡️ Tus Personajes</h2>
-        
-        <div class="row">
-            {% for personaje in personajes %}
-                <div class="col-md-4">
-                    <div class="card campaign-card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ personaje.nombre }}</h5>
-                            <a href="{{ path('editar_personaje', { id: personaje.id }) }}" class="btn btn-primary">Editar</a>
-                        </div>
-                    </div>
+
+    <h2 class="text-center mt-5 mb-4">🎲 Tus Campañas</h2>
+    <div class="row">
+        {% for campanya in campanyas %}
+        <div class="col-md-4">
+            <div class="card campaign-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ campanya.nombre }}</h5>
+                    <p class="card-text">{{ campanya.descripcion|length > 80 ? campanya.descripcion|slice(0, 80) ~ '...'
+                        : campanya.descripcion }}</p>
+                    <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-primary">Editar</a>
                 </div>
-            {% else %}
-                <p class="text-center">No tienes personajes todavía.</p>
-            {% endfor %}
+            </div>
         </div>
-    
-        <h2 class="text-center mt-5 mb-4">🎲 Tus Campañas</h2>
-        <div class="row">
-            {% for campanya in campanyas %}
-                <div class="col-md-4">
-                    <div class="card campaign-card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ campanya.nombre }}</h5>
-                            <p class="card-text">{{ campanya.descripcion|length > 80 ? campanya.descripcion|slice(0, 80) ~ '...' : campanya.descripcion }}</p>
-                            <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-primary">Editar</a>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <p class="text-center">No tienes campañas todavía.</p>
-            {% endfor %}
-        </div>
-    </section>
+        {% else %}
+        <p class="text-center">No tienes campañas todavía.</p>
+        {% endfor %}
+    </div>
+</section>
+{% else %}
+<section class="container mt-4">
+    <h2 class="text-center mb-4">Bienvenido</h2>
+    <p class="text-center mb-4">Esto es FantasyVerse, aqui podras disfrutar de las siguientes fuciones</p>
+
+
+    <ul class="text-center mb-4">
+        <liclass="text-center mb-4">🧙‍♂️Uso, creacion, y edicion de Personajes</li>
+            <liclass="text-center mb-4">📖Uso, creacion, y edicion de Campañas</li>
+                <liclass="text-center mb-4">🗓️Uso, creacion, y edicion de Eventos</li>
+
+    </ul>
+    <ul class="text-center mb-4">
+        <a href="/login" class="btn btn-success text-center mb-4">Iniciar sesion</a>
+    </ul>
+
+
+
+    </div>
     {% endif %}
 
     <style>
@@ -64,6 +84,7 @@
             padding: 1em;
             align-items: center;
         }
+
         .campaign-card:hover {
             transform: scale(1.05);
         }
@@ -77,4 +98,4 @@
             height: auto;
         }
     </style>
-{% endblock %}
+    {% endblock %}
