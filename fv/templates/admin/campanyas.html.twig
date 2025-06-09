@@ -3,31 +3,41 @@
 {% block title %}Administrar campañas{% endblock %}
 
 {% block body %}
-<h1>🎲 Administración de campañas</h1>
+<h1 class="mb-4">🎲 Administración de campañas</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Director</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for campanya in campanyas %}
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
             <tr>
-                <td>{{ campanya.nombre }}</td>
-                <td>{{ campanya.creador }}</td>
-                <td>{{ campanya.descripcion|slice(0, 50) ~ '…' }}</td>
-                <td>
-                    <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-sm btn-primary">✏️ Editar</a>
-                </td>
+                <th>Nombre</th>
+                <th>Director</th>
+                <th>Descripción</th>
+                <th class="text-center">Acciones</th>
             </tr>
-        {% else %}
-            <tr><td colspan="4">No hay campañas registradas.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
-<a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">⬅ Volver</a>
+        </thead>
+        <tbody>
+            {% for campanya in campanyas %}
+                <tr>
+                    <td>{{ campanya.nombre }}</td>
+                    <td>{{ campanya.creador }}</td>
+                    <td>{{ campanya.descripcion|slice(0, 50) ~ '…' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('editar_campanya', { id: campanya.id }) }}" class="btn btn-sm btn-primary">
+                            ✏️ Editar
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No hay campañas registradas.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-secondary">⬅ Volver</a>
+
+</div>
 {% endblock %}
