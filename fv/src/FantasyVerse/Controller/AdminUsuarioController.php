@@ -35,13 +35,23 @@ class AdminUsuarioController extends AbstractController
             $usuario->setCorreo($request->request->get('correo'));
             $usuario->setRoles([$request->request->get('rol')]);
 
-            $rawPassword = $request->request->get('password');
-            if (!empty($rawPassword)) {
-                $hashedPassword = $hasher->hashPassword($usuario, $rawPassword);
+            $password1 = $request->request->get('password');
+            $password2 = $request->request->get('password2');
+
+            if (!empty($password1) || !empty($password2)) {
+                if ($password1 !== $password2) {
+                    return $this->render('usuario/perfil.html.twig', [
+                        'usuario' => $usuario,
+                        'admin' => true,
+                        'error_contraseña' => 'Las contraseñas no coinciden.'
+                    ]);
+                }
+
+                $hashedPassword = $hasher->hashPassword($usuario, $password1);
                 $usuario->setPassword($hashedPassword);
             }
-            $em->flush();
 
+            $em->flush();
             $this->addFlash('success', '✅ Usuario actualizado correctamente.');
             return $this->redirectToRoute('admin_usuarios');
         }
@@ -57,18 +67,34 @@ class AdminUsuarioController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $usuario = new Usuario(); 
+        $usuario = new Usuario();
 
         if ($request->isMethod('POST')) {
             $usuario->setNombre($request->request->get('nombre'));
             $usuario->setCorreo($request->request->get('correo'));
-
-            $rawPassword = $request->request->get('password');
-            if (!empty($rawPassword)) {
-                $hashedPassword = $hasher->hashPassword($usuario, $rawPassword);
-                $usuario->setPassword($hashedPassword);
-            }
             $usuario->setRoles([$request->request->get('rol')]);
+
+            $password1 = $request->request->get('password');
+            $password2 = $request->request->get('password2');
+
+            if (empty($password1) || empty($password2)) {
+                return $this->render('usuario/perfil.html.twig', [
+                    'usuario' => $usuario,
+                    'admin' => true,
+                    'error_contraseña' => 'Debes introducir y confirmar una contraseña.'
+                ]);
+            }
+
+            if ($password1 !== $password2) {
+                return $this->render('usuario/perfil.html.twig', [
+                    'usuario' => $usuario,
+                    'admin' => true,
+                    'error_contraseña' => 'Las contraseñas no coinciden.'
+                ]);
+            }
+
+            $hashedPassword = $hasher->hashPassword($usuario, $password1);
+            $usuario->setPassword($hashedPassword);
 
             $em->persist($usuario);
             $em->flush();
@@ -78,7 +104,7 @@ class AdminUsuarioController extends AbstractController
         }
 
         return $this->render('usuario/perfil.html.twig', [
-            'usuario' => $usuario,  
+            'usuario' => $usuario,
             'admin' => true
         ]);
     }

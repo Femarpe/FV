@@ -55,6 +55,7 @@ class PerfilUsuarioController extends AbstractController
 
         return $this->render('usuario/perfil.html.twig', [
             'usuario' => $usuario,
+            'error_contraseña' => null,
             'admin' => false
         ]);
     }
